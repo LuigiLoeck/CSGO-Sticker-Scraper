@@ -59,6 +59,7 @@ def start():
                 driver.get("https://csgofloat.com/db")
 
                 array_inputs = [5, 10, 15, 20]
+                result = 0
 
                 for nmb in array_inputs:
 
@@ -69,7 +70,6 @@ def start():
                     btn = driver.find_element(By.XPATH, "/html/body/app-root/div/div[2]/app-float-db/div/div/div/div/div/mat-spinner-button/button/span[1]")
 
                     print(row[0])
-                    result = 0
                     stickerSlot.send_keys(row[0])
                     btn.click()
                     time.sleep(5)
