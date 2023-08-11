@@ -37,6 +37,7 @@ def start():
     # Aceita os cookies para nao bugar o resto
     cookies = Pdriver.find_element(By.XPATH, "//*[@id=\"unic-b\"]/div/div/div/div[3]/div[1]/button[2]")
     cookies.click()
+    Pdriver.get("https://csgostash.com/")
 
     # Abrir o arquivo .CSV para escrita
     with open('output.csv', 'w', newline='') as file:
@@ -91,14 +92,21 @@ def start():
 
                 PSearch.clear()
                 PSearch.send_keys(row[0], Keys.ARROW_DOWN)
-                PSendSearch = Pdriver.find_element(By.XPATH, "//*[@id=\"navbar-expandable\"]/form/div/div[1]/span[2]/button")
+                time.sleep(1)
+                Pdriver.execute_script("document.querySelector(\".typeahead-result\").style.display = \"initial\"")
+                PSendSearch = Pdriver.find_element(By.XPATH, "//*[@id=\"navbar-expandable\"]/form/div/div[2]/ul/li[2]/a")
                 PSendSearch.click()
                 time.sleep(1)
-                PStickerClick = Pdriver.find_element(By.XPATH, "//*[@id=\"___gcse_0\"]/div/div/div/div[5]/div[2]/div/div/div[1]/div[1]/div[1]/div[1]/div/a")
-                PStickerClick.click()
-                time.sleep(2)
-                
-                price = Pdriver.find_element(By.XPATH, "/html/body/div[3]/div[4]/div[1]/div/div[2]/div[2]/table/tbody/tr[2]/td/span").text.replace("R$ ","")
+                # PSendSearch = Pdriver.find_element(By.XPATH, "//*[@id=\"navbar-expandable\"]/form/div/div[1]/span[2]/button")
+                # PSendSearch.click()
+                # time.sleep(1)
+                # PStickerClick = Pdriver.find_element(By.XPATH, "//*[@id=\"___gcse_0\"]/div/div/div/div[5]/div[2]/div/div/div[1]/div[1]/div[1]/div[1]/div/a")
+                # PStickerClick.click()
+                # time.sleep(2)
+                try:
+                    price = Pdriver.find_element(By.XPATH, "/html/body/div[3]/div[4]/div[1]/div/div[2]/div[2]/table/tbody/tr[2]/td/span").text.replace("R$ ","")
+                except NoSuchElementException:
+                    price = 0
                 print(price)
                 # Write the row to the output CSV file
                 # writer.writerow([row[0], result])
